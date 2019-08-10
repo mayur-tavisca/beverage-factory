@@ -33,7 +33,7 @@
        (map first)
        (into #{})))
 
-(defn- contain-non-customization-ingredient? [menu-item customization]
+(defn- contain-non-customized-ingredient? [menu-item customization]
   (->> customization
        (map first)
        (into #{})
@@ -55,7 +55,7 @@
 (defn- validate-order [menu-item customization]
   (cond
     (nil? (menu-items menu-item)) (prepare-error-response "Order should contain menu item at first place")
-    (contain-non-customization-ingredient? menu-item customization) (prepare-error-response "Invalid Order. Chief ingredients can't be excluded")
+    (contain-non-customized-ingredient? menu-item customization) (prepare-error-response "Invalid Order. Chief ingredients can't be excluded")
     (contain-all-exclusions? menu-item customization) (prepare-error-response "All the ingredients can't be excluded")
     (contain-invalid-customization? menu-item customization) (prepare-error-response "Invalid Customization")))
 
